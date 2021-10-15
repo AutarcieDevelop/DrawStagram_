@@ -1,0 +1,29 @@
+[33mcommit 92f0420cbfe15a7ea2957d4c45a7dab8a7091a62[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mgitDrawstagram/master[m[33m, [m[1;31mdrawstagram/master[m[33m)[m
+Author: nassimassb <nassimassb@outlook.com>
+Date:   Wed Oct 16 15:55:56 2019 +0200
+
+    menu déroulant disparaît quand clique en dehors
+
+[33mcommit 14b4b99555b120bd883245118bd95e77ca6940ab[m
+Author: nassimassb <nassimassb@outlook.com>
+Date:   Sun Oct 13 21:43:05 2019 +0200
+
+    design + controle mode sombre via bouton dans menu deroulant
+
+[33mcommit 8833d0496204c93f3df914d3c715ca6d2a482f9b[m
+Author: nassimassb <nassimassb@outlook.com>
+Date:   Thu Oct 10 10:30:54 2019 +0200
+
+    Script js dans fichier js à part, ajout d'un menu déroulant en cliquant sur les 3 points, modif design
+
+[33mcommit f366e002813d14d2a23b76864c7002d9a9415b8c[m
+Author: nassimassb <nassimassb@outlook.com>
+Date:   Mon Oct 7 01:20:26 2019 +0200
+
+    test
+
+[33mcommit bce0b3137e8cf72498192e5dfddcb87f1249980c[m
+Author: nassimassb <nassimassb@outlook.com>
+Date:   Sun Oct 6 23:23:47 2019 +0200
+
+    Init

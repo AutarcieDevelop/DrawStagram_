@@ -1,0 +1,165 @@
+<% include partials/header.ejs %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+ <title>Socket.IO chat</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+ <style>
+  body{
+    background-color: grey;
+  }
+  input#newConv{
+    display:none;
+  }
+   aside {
+     background: #000;
+      float:right; 
+      width: 40%; 
+      float: right; 
+      color: white; 
+      padding:150px; 
+      margin:10px; 
+      height:100px; 
+      float: right;
+      margin: 0 1.5%;
+      width: 30%;
+   }
+   .myBox {
+    display: none;
+    background-color: grey;
+      border: none;
+      padding: 155px;
+      font: 24px/36px sans-serif;
+      width: 200px;
+      height: 200px;
+      overflow: scroll;
+      font-size: 15px;
+
+    }
+    button#user {
+      height: 50px;
+      width: 122px;
+
+    }
+    form#form-users {
+      display: none;
+    }
+    section {
+  float: left;
+  margin: 0 1.5%;
+  width: 63%;
+}
+    #messages li:nth-child(odd) {text-align: right;}
+
+ </style>
+ </head>
+  <body>
+    <!-- barre de recherche avec liste (datalist) des users a qui envoyer un message -->
+
+    <section>      
+      <button name="searchUsers" id="SearchUsers" onclick="displayUsers()">Nouveau message</button>
+
+      <form id="form-user">
+          <% if (users.length != 0){
+              users.forEach((user, index) => { %>
+                <button type="submit" id="<%= user.user_id %>" name="usersNew" formaction="/newConversation/<%= user.first_name %>" onclick="nameOfDest()"  value="<%= user.user_id %>"><%= user.first_name %></button><br/>
+              <%})
+            } %>
+          </form>
+      <form>
+
+      <% if (conversation.length != 0){
+          conversation.forEach((conv) => { %>
+           <button value="<%= conv.username_Destinataire2 %>" name="user" id="user" onclick="choose()"><%= conv.username_Destinataire2 %> </button>        
+         <% })
+        } else { %>
+          <p>Pas de conversation</p>
+      <% } %>
+
+    </section>
+</form>
+    <aside class="myBox"id="myBox" visible="false">
+      <%      
+        if (messages.lentgh != 0){
+          messages.forEach((message, index) => { %>
+            <p><%= message.id_emetteur %> : <%= message.message %></p>        
+           <% ms = messages.message; %>
+     <% })
+        } else { %>
+          <p>an error occured</p>
+      <% }
+      %>
+    <ul id="messages"></ul>
+    <form action="">
+      <p id="writing"></p>
+      <input id="m" autocomplete="off"  oninput="writing()" />
+      <button>Send</button>
+    </form>      
+
+    </aside>
+
+<script type="text/javascript">
+
+  function tellMe(){
+    alert(document.getElementById('destinataire').value);
+  }
+
+  function choose(){
+    var socket = io('http://localhost:8085');
+
+  $(function () {
+    $('form').submit(function(e){
+      e.preventDefault(); // prevents page reloading
+      socket.emit('chat-message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+    socket.on('chat-message', function(msg){
+      $('#messages').append($('<p>').text(msg));
+    });
+  });
+    document.getElementById('myBox').style.display = "block";
+  }
+  function writing() {
+    document.getElementById('writing').innerHTML = "Est en train d'écrire...";
+  }
+
+  //fuonction pour effacer le message "est en train d'ecrire..." apres un certain temps
+  var delay = (function(){
+  var timer = 0;
+
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+  })();
+
+  $(document).ready(function(){
+    $('input').keyup(function() {
+      delay(function(){
+        document.getElementById('writing').innerHTML = "";
+      }, 500);
+    });
+
+  });
+
+  function displayUsers(){
+      document.getElementById('form-users').style.display = "block";
+}
+    $("button").click(function() {
+    var fired_button = $(this).val();
+//    alert(fired_button);
+    var page = "/bottom/:"+ fired_button;
+    $(location).attr('href',page); 
+});
+  function nameOfDest(){
+    
+
+  }
+</script>
+ </body>
+</html>

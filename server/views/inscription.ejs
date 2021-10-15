@@ -1,0 +1,48 @@
+<% include partials/header.ejs %>
+<html lang="fr">
+<head>
+    <title> Inscription </title>
+</head>
+<body>
+    <div class="container">
+        <% if (message != '') { %>
+            <p class="text-center text-danger"><%= message %></p>
+        <% } %>
+        <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="first_name"> Prénom : </label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="ex : Mahmoud..." required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="last_name"> Nom : </label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="ex : Dubois..." required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="username"> Username : </label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="ex : Ramboo88..." required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="mail"> Username : </label>
+                    <input type="text" class="form-control" name="mail" id="mail" placeholder="ex : Drarux@skynet.com..." required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="MotDePasse"> Mot de passe : </label>
+                    <input type="password" class="form-control" name="MotDePasse" id="MotDePasse" required />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="pass2"> Mot de passe : </label>
+                    <input type="password" class="form-control" name="pass2" id="pass2" required />
+                </div>
+
+            </div>
+            <!--<div class="col-md-12">
+                <label for="player-img"><b>Player Image</b></label><br>
+                <input type="file" name="image" id="player-img" class="" required>
+            </div>-->
+            <button type="submit" class="btn btn-primary float-right"> Ajouter utilisateur ! </button>
+        </form>
+    </div>
+
+</body>
+</html>

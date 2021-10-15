@@ -1,0 +1,265 @@
+<% include partials/header.ejs %>
+<html lang="fr">
+<head>
+
+    <title>Images</title>
+ 
+        <link href="https://cdn.jsdelivr.net/npm/ol-geocoder@latest/dist/ol-geocoder.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://openlayers.org/en/v3.20.1/css/ol.css" type="text/css">
+        <script src="https://openlayers.org/en/v3.20.1/build/ol.js"></script>
+        <!-- STACKOVERFLOW : Add the script of the geocoder here -->
+        <script src="https://cdn.jsdelivr.net/npm/ol-geocoder"></script>
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <style>
+            input[type="radio"] {
+                -webkit-appearance: none;
+            }
+
+            div.button label {
+                color: #fff;
+            }
+        </style>
+
+        <style type="text/css">
+            .ol-popup {
+                display: none;
+                position: absolute;
+                background-color: white;
+                -moz-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+                -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+                filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+                padding: 15px;
+                border-radius: 10px;
+                border: 1px solid #cccccc;
+                bottom: 12px;
+                left: -50px;
+            }
+            .ol-popup:after, .ol-popup:before {
+                top: 100%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+            .ol-popup:after {
+                border-top-color: white;
+                border-width: 10px;
+                left: 48px;
+                margin-left: -10px;
+            }
+            .ol-popup:before {
+                border-top-color: #cccccc;
+                border-width: 11px;
+                left: 48px;
+                margin-left: -11px;
+            }
+            .ol-popup-closer {
+                text-decoration: none;
+                position: absolute;
+                top: 2px;
+                right: 8px;
+            }
+            .ol-popup-closer:after {
+                content: "x";
+            }
+            /* STACKOVERFLOW : Add a margin top here */
+            .ol-zoom-extent {
+                margin-top: 40px;
+            }
+        </style>
+</head>
+ <body style="background-color: grey">
+
+	<% if (nom) { %>
+	    <img src="../<%= nom %>" alt="Image"/>
+	<% } %>
+        <div id="map" class="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+
+        </div>
+        <form>
+            <input type="hidden" id="distance" type="range" min="0" max="100" step="1" value="40"/>
+        </form>
+        <script>
+            var distance = document.getElementById('distance');
+
+            var count = 20000;
+            var features = new Array(count);
+            var e = 4500000;
+
+            for (var i = 0; i < count; ++i) {
+                var coordinates = [2 * e * Math.random() - e, 2 * e * Math.random() - e];
+                features[i] = new ol.Feature(new ol.geom.Point(coordinates));
+            }
+
+            var source = new ol.source.Vector({
+                features: features
+            });
+
+            var clusterSource = new ol.source.Cluster({
+                distance: parseInt(distance.value, 10),
+                source: source
+            });
+
+            var styleCache = {};
+            var clusters = new ol.layer.Vector({
+                source: clusterSource,
+            });
+
+            var raster = new ol.layer.Tile({
+                source: new ol.source.OSM()
+            });
+
+            var positionsOfPic = ol.proj.transform([77.5946, 12.9716], 'EPSG:4326', 'EPSG:3857');
+
+            //new
+            $(document).ready(function () {
+
+                // Create two layers but let user add them to the map
+                layerWMS = new ol.layer.Tile({
+                    source: new ol.source.TileWMS({
+                        url: 'http://demo.boundlessgeo.com/geoserver/wms',
+                        params: {
+                            'LAYERS': 'ne:NE1_HR_LC_SR_W_DR'
+                        }
+                    })
+                })
+
+                layerOSM = new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+
+/*
+                bingmaps = new ol.layer.Tile({
+                    source: new ol.source.BingMaps({
+                        key: 'AscLNxXahdGPgLwxhx9FyXJPTq5RIYl76pXga8RF2JR4RkocGcX3U0U11VCYuAxd',
+                        imagerySet: 'AerialWithLabels'
+                    }),
+                    name: 'bingmaps'
+                });
+                */
+                                        map.addLayer(layerOSM);
+
+            });
+            //new
+
+            var iconFeature = new ol.Feature({
+                geometry: new ol.geom.Point([8637791.36, 1456487.82]),
+                name: 'Police Station',
+                population: 4000,
+                rainfall: 500
+            });
+
+            var iconStyle = new ol.style.Style({
+                image: new ol.style.Icon({
+                    scale: 0.65,
+                    src: 'icon.png'
+                })
+
+            });
+
+            iconFeature.setStyle(iconStyle);
+            var vectorSource = new ol.source.Vector({
+                features: [iconFeature]
+            });
+
+            var vectorLayer = new ol.layer.Vector({
+                source: vectorSource,
+                title: 'point_layer'
+            });
+            //new
+            var map = new ol.Map({
+                layers: [raster, clusters, vectorLayer],
+                target: document.getElementById('map'),
+                view: new ol.View({
+                    center: positionsOfPic,
+                    zoom: 12,
+                    maxZoom: 18,
+                    minZoom: 5,
+                })
+            });
+
+            var container = document.getElementById('popup');
+            var content = document.getElementById('popup-content');
+            var closer = document.getElementById('popup-closer');
+
+            closer.onclick = function () {
+                container.style.display = 'none';
+                closer.blur();
+                return false;
+            };
+
+            var overlay = new ol.Overlay({
+                target: 'map',
+                element: container,
+                positioning: 'bottom-center',
+                stopEvent: false
+            });
+            map.addOverlay(overlay);
+
+            /* STACKOVERFLOW : Add the code for the geocoder here */
+            //Instantiate with some options and add the Control
+            var geocoder = new Geocoder('nominatim', {
+                provider: 'osm',
+                lang: 'en',
+                placeholder: 'Search for ...',
+                limit: 5,
+                debug: false,
+                autoComplete: true,
+                keepOpen: true
+            });
+            map.addControl(geocoder);
+
+            //Listen when an address is chosen
+            geocoder.on('addresschosen', function (evt) {
+             //   console.info(evt);
+                if(evt.coordinate != undefined){
+                //    window.location.href = '../Coordinates/'+ evt.coordinate[0]+'/'+evt.coordinate[1];
+                } else {
+                    alert('something went wrong');
+                }
+                window.setTimeout(function () {
+                    overlay.show(evt.coordinate, evt.address.formatted);
+                }, 3000);
+            });
+            /* STACKOVERFLOW : END */
+
+            //new
+            var feature_onClick;
+            map.on('click', function (evt) {
+
+                feature_onClick = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+                //    console.log(feature);
+
+                    return feature;
+                });
+
+
+                if (feature_onClick) {
+                    var content = document.getElementById('popup-content');
+         //           console.log(feature_onClick.getProperties().name);
+                    overlay.setPosition(evt.coordinate);
+                    content.innerHTML = feature_onClick.getProperties().name;
+                    container.style.display = 'block';
+                }
+            });
+
+            // change mouse cursor when over marker
+            var feature_onHover;
+            map.on('pointermove', function (e) {
+                pixel = map.getEventPixel(e.originalEvent);
+                hit = map.hasFeatureAtPixel(pixel);
+                map.getTarget().style.cursor = hit ? 'pointer' : '';
+            });
+
+
+</script>
+</body>
+</html>

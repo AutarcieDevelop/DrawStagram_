@@ -1,0 +1,39 @@
+{
+  "name": "node-mqsql-crud-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.16.0",
+    "connect-pg-simple": "^6.0.1",
+    "drag-drop": "^5.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
+    "express-session": "^1.17.0",
+    "mkdirp": "^0.5.1",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "multer-storage-cloudinary": "^2.2.1",
+    "mysql": "^2.15.0",
+    "node-geocoder": "^3.25.0",
+    "nodemon": "^1.19.4",
+    "nominatim-geocoder": "^0.1.4",
+    "ol-geocoder": "^4.0.0",
+    "overlay": "^1.2.5",
+    "password-hash": "^1.2.2",
+    "path": "^0.12.7",
+    "pg": "latest",
+    "req-flash": "0.0.3",
+    "server": "^1.0.19",
+    "socket.io": "^2.3.0",
+    "upload": "^0.1.3"
+  }
+}

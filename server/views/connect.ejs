@@ -1,0 +1,117 @@
+<html lang="fr">
+<head>
+    <title> Connexion </title>
+    <meta name="google-signin-client_id" content="624460597057-97h423gj884jdd591h2qa7no5p70g22d.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body style="background-color: grey">
+<div class="container">
+    <% if (message != '') { %>
+        <p class="text-center text-danger"><%= message %></p>
+    <% } %>
+    <form class="add-player-form" action="" method="post" enctype="multipart/form-data">
+        <div class="form-row">
+
+            <div class="form-group col-md-4">
+                <label for="login"> Login : </label>
+                <input type="text" class="form-control" name="login" id="login" placeholder="Username or Password" required />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="mdp"> Mot de passe : </label>
+                <input type="password" class="form-control" name="mdp" id="mdp" placeholder="Password" required />
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-primary float-right"> Connecte Toi ! </button>
+    </form>
+        <div class="form-row">
+            <div class="form-group col-md-4"> <a href="/inscription"> S'inscrire </a> </div>
+            <div class="form-group col-md-4"> <a href="#"> Mot de passe oublié ? </a> </div>
+        </div>
+</div>
+    <!--Google-->
+
+<br/><br/>
+<div class="container">
+    <div class="g-signin2" data-width="265px" data-onsuccess="onSignIn" data-theme="dark"></div>
+</div>
+
+<!--
+<div>
+    <a href="#" onclick="signOut();"> Sign out(google) </a>
+</div>
+-->
+
+<script>
+
+    // Api Connection Google
+
+    function onSignIn(googleUser) {
+
+        // Useful data for your client-side scripts;
+
+        const profile = googleUser.getBasicProfile();
+        // let apiId = profile.getId();
+        let apiName = profile.getName();
+        let apiImage = profile.getImageUrl();
+        let apiEmail = profile.getEmail();
+
+        // The ID token you need to pass to your backend:
+        /*let id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);*/
+        let result = {
+            apiName,
+            apiImage,
+            apiEmail
+        }
+
+
+    }
+
+    // Deconnexion de google
+
+    function signOut() {
+
+        var auth2 = gapi.auth2.getAuthInstance();
+
+        auth2.signOut().then(() => {
+
+            alert('Tu as bien été déconnecté ! ');
+            console.log('User signed out.');
+            location.reload();
+        });
+    }
+
+    /*
+
+    function Erreur(texte){
+        let div1 = document.getElementById("ifCo");
+        div1.innerHTML = texte;
+        div1.style.color = 'Red';
+    }*/
+
+
+    // Api connection Facebook (Abandonnée)
+    /* window.fbAsyncInit = function() {
+    FB.init({
+    appId      : '379485192938504', //Id de l'application sur le site de FB
+    cookie     : true,
+    xfbml      : true,
+    version    : '4.0'
+    });
+    FB.AppEvents.logPageView();
+    };
+    (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/fr/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk') );
+
+    */
+</script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+/* ////////////////////////////////////////////////// General ////////////////////////////////////////////////////////// */
+
+body
+{
+    /* background-color: #2f2f2f; */
+    background-color: #1d1f20; 
+}
+
+/* ////////////////////////////////////////////////// Navbar ////////////////////////////////////////////////////////// */
+.navbar
+{
+    z-index: 80;
+    background-color: #181a1b;
+    padding-top: 10;
+    padding-bottom: 15;
+    height: 60px;
+    border-bottom: inset 1px#666463;
+}
+.searchbar
+{
+    transform: translate(380px,10px);
+    background-color: #2f2f2f;
+    border-radius: 10px;
+    display: flex;
+    height: 30px;
+    /* margin-left: 380; */
+    /* padding-right: 10px; */
+    /* align-content: center; */
+}
+.search_input
+{
+    color: #fff;
+    caret-color: #fff;
+    border: none;
+    background: none;
+    width: 140px;
+    padding: 10px;
+    text-align: center;
+    transform: translateX(10px);
+    outline: none; 
+
+}
+.searchbar:hover > .search_input
+{
+    width: 200px;
+    transition: width 0.2s linear;
+}
+.search_icon
+{
+    display: flex;
+    align-items: center;
+    width: 15px;
+    transform: translate(-119px,2px);
+}
+.searchbar:hover > .search_icon
+{
+    transform: translate(-149px,2px);
+}
+.dropbtn 
+{
+    background-color: #181a1b;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.dropdown 
+{
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content 
+{
+    display: none;
+    position: absolute;
+    background-color: #181a1b;
+    border: inset 1.5px#727272;
+    border-top: none;
+    min-width: 175px;
+    color: #fff;
+    right:0;
+    margin-top: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+/* .dropdown-content:hover 
+{
+    color: #727272;
+} */
+
+/* Show the dropdown menu*/
+.show 
+{
+    display:block;
+} 
+
+.dropdownContainer
+{
+    position: absolute;
+    transform: translate(110px,-17px);
+}
+.toggle-btn
+{
+    background-color: #2f2f2f;
+    width: 25px;
+    height: 15px;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+}
+.toggle-btn > .inner-circle
+{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all 200ms ease-in-out;
+    transform: translateY(-1px);
+}
+.toggle-btn.active
+{
+    background-color: #0583e0;
+}
+.toggle-btn.active > .inner-circle
+{
+    margin-left: 50%;
+}
+
+@media screen and (max-width:991px)
+{
+    .navbar-brand img
+    {
+        width: 50px;
+    }
+    .navbar-brand img:nth-child(3)
+    {
+        width: 80px;
+    }
+    .navbar-brand
+    {
+        transform: translateY(-25px);
+    }
+    .searchbar
+    {
+        transform: translate(-50px,-16px);
+    }
+    .search_input
+    {
+        width: 90px;
+        font-size: 13;
+    }
+    .searchbar:hover > .search_input
+    {
+        width: 120px;
+    }
+    .search_icon
+    {
+        display: flex;
+        width: 13px;
+        transform: translate(-85px,2px);
+    }
+    .searchbar:hover > .search_icon
+    {
+        transform: translate(-100px,2px);
+    }
+}
+
+/* //////////////////////////////////////////// loading page image ////////////////////////////////////////////////////////// */
+
+.loader 
+{
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #2f2f2f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader > img 
+{
+    width: 100px;
+}
+
+.loader.hidden 
+{
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut 
+{
+    100% 
+    {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.thumb 
+{
+    height: 100px;
+    border: 1px solid black;
+    margin: 10px;
+}
+
+/* //////////////////////////////////////////// profile page ////////////////////////////////////////////////////////// */
+
+#addPicture-btn
+{
+    border-radius: 30px;
+    width: 30px;
+    height: 30px;
+    background-color: #2f2f2f;
+    align-content: center;
+}
+#addPicture-btn > #inner-design
+{
+    color: #fff;
+    margin-bottom: 5px;
+}

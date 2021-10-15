@@ -1,0 +1,47 @@
+<% include partials/header.ejs %>
+<html lang="fr">
+<head>
+    <link rel ="stylesheet" type ="text/css" href ="partials/style.css" />
+    <title>Images</title>
+</head>
+<body>
+
+<p>Bonjour <%= username %></p>
+<input type="hidden" name="username" value="<%=username %>">
+<div class="table-wrapper">
+
+    <form id="uploadForm" enctype="multipart/form-data" action="" method="post">
+        <div class="box" draggable="true">
+        <div class="container">
+            <input type="file" name="foo" />
+        </div>
+        </div>
+        <input type="submit" value="Ajouter une nouvelle Image" draggable="true" name="submit" />
+    </form>
+
+<% images.forEach((image) => { %>
+
+    <table>
+        <tr>
+            <td><a href="profile/<%= image.emeteur_username %>"> <%= image.emeteur_username %> </a></td>
+        </tr>
+        <tr>
+            <td><a href="image/<%= image.id_image %>"><img src="<%= image.id_image %>" alt="Image"/></a></td>
+        </tr>
+        <tr>
+            <td>
+                <button formaction="/Like"> Like </button>
+            </td>
+            <td>
+                <button formaction="/Comment"> Donner un avis </button>
+            </td>
+            <td>
+                <button formaction="/Repost"> Repost </button>
+            </td>
+        </tr>
+    </table>
+
+<% }) %>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+#map {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    z-index: 100;
+}
+.table-wrapper {
+    background-color: grey;
+    margin-top: 50px;
+}
+body {
+    background-color: grey;
+}
+.player-img {
+    width: 40px;
+    height: 40px;
+}
+
+.add-player-form {
+    margin-top: 50px;
+}
+
+.text-danger{
+    color: red;
+}
